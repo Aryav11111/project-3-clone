@@ -1,0 +1,32 @@
+main.cashier { max-width: 1280px; display: grid; grid-template-columns: 1fr 340px; gap: 32px; align-items: start; }
+
+.category { margin-bottom: 26px; }
+.category h2 { font-size: 22px; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1.5px solid var(--ink); }
+.drink-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.drink-grid button { min-height: 76px; padding: 10px 12px; text-align: left; background: var(--card); border: 1.5px solid var(--rule); border-radius: 3px; font-size: 15px; font-weight: 500; }
+.drink-grid button:hover { border-color: var(--ink); }
+.drink-grid button:active { background: var(--ink); color: var(--paper); }
+.drink-grid .price { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); }
+
+.ticket { position: sticky; top: 20px; background: var(--card); border: 1.5px solid var(--ink); padding: 20px; }
+.ticket h2 { margin: 0; font-size: 24px; }
+.ticket .label { margin: 16px 0 6px; }
+.options.small button { padding: 7px 11px; font-size: 14px; }
+
+.order-lines { margin-top: 18px; border-top: 1px dashed var(--muted); min-height: 60px; max-height: 300px; overflow-y: auto; }
+.order-line { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 15px; }
+.order-line small { display: block; color: var(--muted); font-size: 12px; }
+.order-line button { background: none; border: none; color: var(--red); padding: 0 0 0 8px; }
+.empty { color: var(--muted); padding: 14px 0; font-size: 15px; }
+
+.order-total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 600; margin: 14px 0 16px; }
+.ticket .big-btn { margin-top: 14px; max-width: none; }
+.clear-btn { width: 100%; margin-top: 8px; padding: 10px; background: none; border: 1.5px solid var(--rule); border-radius: 3px; }
+.message { margin-top: 12px; min-height: 1.4em; font-weight: 600; }
+.message.ok { color: #4e6a3a; }
+.message.bad { color: var(--red); }
+
+@media (max-width: 900px) {
+  main.cashier { grid-template-columns: 1fr; }
+  .ticket { position: static; }
+}

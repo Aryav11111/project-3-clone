@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boba Lounge – Manager</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="manager.css" />
+    <link rel="stylesheet" href="translate.css" />
+    <script src="translate.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <svg viewBox="126 64 148 252" width="26" height="44" aria-hidden="true">
+          <rect
+            x="203"
+            y="70"
+            width="16"
+            height="120"
+            rx="3"
+            fill="#c4452c"
+            stroke="#1d1916"
+            stroke-width="5"
+            transform="rotate(14 211 160)"
+          />
+          <path
+            d="M146 158 L254 158 L240 300 Q239 310 229 310 L171 310 Q161 310 160 300 Z"
+            fill="#d8b48c"
+            stroke="#1d1916"
+            stroke-width="7"
+            stroke-linejoin="round"
+          />
+          <g fill="#1d1916">
+            <circle cx="178" cy="292" r="10" />
+            <circle cx="200" cy="296" r="10" />
+            <circle cx="222" cy="292" r="10" />
+            <circle cx="189" cy="274" r="10" />
+            <circle cx="211" cy="274" r="10" />
+          </g>
+          <rect
+            x="134"
+            y="152"
+            width="132"
+            height="13"
+            rx="5"
+            fill="#f4eee3"
+            stroke="#1d1916"
+            stroke-width="7"
+          />
+          <text
+            x="200"
+            y="236"
+            text-anchor="middle"
+            font-family="Georgia, serif"
+            font-weight="800"
+            font-style="italic"
+            font-size="58"
+            fill="#1d1916"
+          >
+            42
+          </text>
+        </svg>
+        Boba <em>Lounge</em>
+      </div>
+      <a class="home-return" href="index.html">← Back to Home</a>
+    </header>
+
+    <main>
+      <h1>Manager</h1>
+      <div id="loginPanel" class="auth-panel">
+        <h2>Manager sign in</h2>
+        <p>Use your authorized Google account. Your account stays signed in for 30 days, including between visits.</p>
+        <p id="authStatus" role="status">Checking your session…</p>
+        <a id="googleLogin" class="google-login" href="/auth/google" hidden>Sign in with Google</a>
+      </div>
+      <div id="managerContent" hidden>
+      <div class="account-bar">
+        <div>Signed in as <strong id="accountName"></strong><br><span id="accountEmail"></span></div>
+        <button id="logoutBtn" type="button">Sign out</button>
+      </div>
+      <div class="tabs" id="tabs">
+        <button data-table="menu_items" class="on">Menu</button>
+        <button data-table="inventory">Inventory</button>
+        <button data-table="employees">Employees</button>
+      </div>
+      <div class="manager">
+        <table id="table"></table>
+        <div class="editor">
+          <h2 id="editorTitle">New row</h2>
+          <div id="fields"></div>
+          <div class="row">
+            <button class="save" id="saveBtn">Save</button>
+            <button id="newBtn">New</button>
+          </div>
+          <div class="row">
+            <button class="delete" id="deleteBtn">Delete</button>
+          </div>
+          <div class="error" id="editorError"></div>
+        </div>
+      </div>
+      </div>
+    </main>
+
+    <script src="manager.js"></script>
+  </body>
+</html>

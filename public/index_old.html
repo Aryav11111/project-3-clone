@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boba Lounge - Weather-Powered Drink Recs</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #faf5ef;
+      color: #2b1f1d;
+      margin: 0;
+      padding: 30px 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 650px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(60, 40, 30, 0.08);
+      overflow: hidden;
+      border: 1px solid #ede3d7;
+    }
+    .header {
+      background: #3e2723;
+      color: #fff;
+      padding: 24px 28px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      margin: 6px 0 0;
+      color: #d7ccc8;
+      font-size: 0.95rem;
+    }
+    .content {
+      padding: 24px 28px;
+    }
+    .banner {
+      background-color: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .weather-info h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #795548;
+    }
+    .weather-info p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: #5d4037;
+    }
+    .temp-badge {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #e65100;
+      white-space: nowrap;
+    }
+    .rec-card {
+      background-color: #fcfbf9;
+      border: 1.5px solid #d7ccc8;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .rec-tag {
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: #efebe9;
+      color: #4e342e;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .rec-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2b1f1d;
+      margin: 0 0 6px 0;
+    }
+    .rec-desc {
+      margin: 0 0 16px 0;
+      font-size: 0.95rem;
+      color: #5d4037;
+      line-height: 1.4;
+    }
+    .drink-specs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .spec-item {
+      background: #f5ede6;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 500;
+      color: #4e342e;
+    }
+    .btn-refresh {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #6d4c41;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-refresh:hover {
+      background-color: #5d4037;
+    }
+    .footer-api {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: #8d6e63;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>The Daily Boba</h1>
+      <p>Real-Time Weather-Driven Specials</p>
+    </div>
+
+    <div class="content">
+      <div class="banner">
+        <div class="weather-info">
+          <h3 id="weatherStatus">Checking local weather...</h3>
+          <p id="weatherLocation">Target: College Station, TX (TAMU)</p>
+        </div>
+        <div class="temp-badge" id="tempDisplay">--°F</div>
+      </div>
+
+      <div class="rec-card" id="recommendationCard">
+        <span class="rec-tag" id="recTag">Today's Suggestion</span>
+        <h2 class="rec-title" id="recDrink">Loading recommendation...</h2>
+        <p class="rec-desc" id="recDetails">We are analyzing current weather conditions via Open-Meteo API.</p>
+        <div class="drink-specs" id="recSpecs"></div>
+      </div>
+
+      <button class="btn-refresh" id="refreshBtn">Update Live Weather Deal</button>
+      <div class="footer-api">Data fetched live from Open-Meteo REST API (No Key Required)</div>
+    </div>
+  </div>
+
+  <script>
+    // College Station / TAMU coordinates
+    const LAT = 30.628;
+    const LON = -96.334;
+
+    const weatherStatus = document.getElementById('weatherStatus');
+    const tempDisplay = document.getElementById('tempDisplay');
+    const recTag = document.getElementById('recTag');
+    const recDrink = document.getElementById('recDrink');
+    const recDetails = document.getElementById('recDetails');
+    const recSpecs = document.getElementById('recSpecs');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    async function updateWeatherSpecial() {
+      refreshBtn.disabled = true;
+      refreshBtn.textContent = 'Fetching current conditions...';
+
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,apparent_temperature,precipitation,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+        const res = await fetch(url);
+        
+        if (!res.ok) throw new Error(`Weather API Error: ${res.status}`);
+        
+        const data = await res.json();
+        const temp = Math.round(data.current.temperature_2m);
+        const feelsLike = Math.round(data.current.apparent_temperature);
+        const precip = data.current.precipitation;
+
+        tempDisplay.textContent = `${temp}°F`;
+        weatherStatus.textContent = precip > 0 ? 'Rainy & Chilly' : (temp >= 78 ? 'Warm & Sunny' : 'Cool Breeze');
+
+        let recommendation = {};
+
+        if (temp >= 82) {
+          recommendation = {
+            tag: 'Heatwave Quencher',
+            drink: 'Iced Mango Passionfruit Slush with Boba',
+            desc: `It is currently ${temp}°F (feels like ${feelsLike}°F). Beat the heat with an ice-cold, refreshing fruit slush packed with fresh brown sugar tapioca pearls.`,
+            specs: ['100% Crushed Ice', 'Less Sweet (50%)', 'Boba + Lychee Jelly']
+          };
+        } else if (temp >= 68) {
+          recommendation = {
+            tag: 'Perfect Afternoon Pick-Me-Up',
+            drink: 'Classic Roasted Oolong Milk Tea',
+            desc: `Comfortable ${temp}°F outside! A balanced roasted oolong gives smooth caffeine energy without being overwhelmingly rich.`,
+            specs: ['Regular Ice', 'Half Sugar', 'Slow-Cooked Golden Boba']
+          };
+        } else {
+          recommendation = {
+            tag: 'Cozy Warmth Special',
+            drink: 'Hot Taro Milk Tea with Brown Sugar Pearls',
+            desc: `Current temp is a brisk ${temp}°F. Warm up with a velvety, comforting hot taro tea paired with soft, warm pearls.`,
+            specs: ['Warm / Hot', '30% Sweetness', 'Extra Boba']
+          };
+        }
+
+        recTag.textContent = recommendation.tag;
+        recDrink.textContent = recommendation.drink;
+        recDetails.textContent = recommendation.desc;
+
+        recSpecs.innerHTML = '';
+        recommendation.specs.forEach(spec => {
+          const span = document.createElement('span');
+          span.className = 'spec-item';
+          span.textContent = spec;
+          recSpecs.appendChild(span);
+        });
+
+      } catch (err) {
+        console.error(err);
+        weatherStatus.textContent = 'Unable to reach weather service';
+        recDrink.textContent = 'House Classic Milk Tea';
+        recDetails.textContent = 'Could not retrieve live temperatures, but you can never go wrong with standard brown sugar boba.';
+      } finally {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = 'Update Live Weather Deal';
+      }
+    }
+
+    refreshBtn.addEventListener('click', updateWeatherSpecial);
+    window.addEventListener('DOMContentLoaded', updateWeatherSpecial);
+  </script>
+</body>
+</html>

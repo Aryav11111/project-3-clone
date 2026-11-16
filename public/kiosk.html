@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boba Lounge – Order</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="kiosk.css" />
+    <link rel="stylesheet" href="translate.css" />
+    <script src="translate.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <svg viewBox="126 64 148 252" width="26" height="44" aria-hidden="true">
+          <rect
+            x="203"
+            y="70"
+            width="16"
+            height="120"
+            rx="3"
+            fill="#c4452c"
+            stroke="#1d1916"
+            stroke-width="5"
+            transform="rotate(14 211 160)"
+          />
+          <path
+            d="M146 158 L254 158 L240 300 Q239 310 229 310 L171 310 Q161 310 160 300 Z"
+            fill="#d8b48c"
+            stroke="#1d1916"
+            stroke-width="7"
+            stroke-linejoin="round"
+          />
+          <g fill="#1d1916">
+            <circle cx="178" cy="292" r="10" />
+            <circle cx="200" cy="296" r="10" />
+            <circle cx="222" cy="292" r="10" />
+            <circle cx="189" cy="274" r="10" />
+            <circle cx="211" cy="274" r="10" />
+          </g>
+          <rect
+            x="134"
+            y="152"
+            width="132"
+            height="13"
+            rx="5"
+            fill="#f4eee3"
+            stroke="#1d1916"
+            stroke-width="7"
+          />
+          <text
+            x="200"
+            y="236"
+            text-anchor="middle"
+            font-family="Georgia, serif"
+            font-weight="800"
+            font-style="italic"
+            font-size="58"
+            fill="#1d1916"
+          >
+            42
+          </text>
+        </svg>
+        Boba <em>Lounge</em>
+      </div>
+      <a class="home-return" href="index.html">← Back to Home</a>
+      <nav>
+        <span class="nav-divider"></span>
+        <button data-page="menu" class="on">Menu</button>
+        <button data-page="about">About</button>
+      </nav>
+      <button class="cart-btn" data-page="checkout">
+        Cart (<span id="cartCount">0</span>)
+      </button>
+    </header>
+
+    <main>
+      <section id="menu" class="on">
+        <div class="weather">
+          <b class="temp" id="temp">--°</b>
+          <p id="weatherText">Checking the weather…</p>
+        </div>
+        <div class="chips" id="categories"></div>
+        <div class="drinks" id="drinks"></div>
+      </section>
+      <section id="customize">
+        <button class="back" data-page="menu">← Back to menu</button>
+        <h1 id="drinkName"></h1>
+        <div class="price" id="drinkPrice"></div>
+        <div class="label">Sugar</div>
+        <div class="options" id="sugarOptions"></div>
+        <div class="label">Ice</div>
+        <div class="options" id="iceOptions"></div>
+        <button class="big-btn" id="addBtn">Add to cart</button>
+      </section>
+      <section id="checkout">
+        <button class="back" data-page="menu">← Keep ordering</button>
+        <h1>Checkout</h1>
+        <div class="receipt" id="receipt"></div>
+        <div class="label">Pay with</div>
+        <div class="options" id="paymentOptions"></div>
+        <button class="big-btn" id="payBtn">Place order</button>
+        <div class="error" id="payError"></div>
+      </section>
+      <section id="done">
+        <p>Thanks! Your order number is</p>
+        <div class="order-number" id="orderNumber"></div>
+        <button class="cart-btn" data-page="menu">Start a new order</button>
+      </section>
+      <section id="about">
+        <h1>About us</h1>
+        <p>
+          A small tea bar near campus. Every drink is made to order: you pick
+          the sugar and the ice.
+        </p>
+        <p>
+          The drink marked <b>Today</b> on the menu changes with the weather
+          outside.
+        </p>
+        <p>
+          Built by Team 42 for CSCE 331: Mirthvika S, Aryav S, Amishi N,
+          Nicholas D and Malachi L.
+        </p>
+      </section>
+    </main>
+
+    <script src="kiosk.js"></script>
+  </body>
+</html>

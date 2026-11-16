@@ -1,0 +1,395 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #f4eee3;
+  --surface: #fbf8f2;
+  --surface-alt: #ebe3d4;
+  --primary: #1d1916;
+  --primary-hover: #c4452c;
+  --text: #1d1916;
+  --muted: #8c8075;
+  --border: #d6cbb9;
+  --shadow: none;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  padding-top: 75px;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  background-color: #1d1916;
+  padding: 12px 24px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 65px;
+
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.site-nav,
+.tools {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.site-link {
+  color: #d6cbb9;
+  padding: 8px 12px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.site-link:hover,
+.site-link.current {
+  background-color: #f4eee3;
+  color: #1d1916;
+}
+
+button {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+
+  padding: 9px 18px;
+
+  border: none;
+  border-radius: 6px;
+
+  background-color: var(--primary);
+  color: white;
+
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+.navbar button {
+  background-color: transparent;
+  border: 1.5px solid #f4eee3;
+}
+
+.navbar button:hover {
+  background-color: #c4452c;
+  border-color: #c4452c;
+}
+
+.order-item-detail {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.empty-orders {
+  color: var(--muted);
+  padding: 8px 4px;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #a96a74;
+  outline-offset: 2px;
+}
+
+.order-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  align-items: flex-start;
+  gap: 16px;
+
+  padding: 18px 20px;
+
+  overflow-x: auto;
+  overflow-y: auto;
+
+  min-height: calc(100vh - 75px);
+}
+
+.order-ticket {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  width: 300px;
+
+  background-color: var(--surface);
+
+  border: 1.5px solid var(--primary);
+  border-radius: 3px;
+
+  overflow: hidden;
+
+  box-shadow: var(--shadow);
+}
+
+.titlerow {
+  font-size: 21px;
+  font-weight: 700;
+
+  background-color: var(--primary);
+  color: white;
+
+  font-family: inherit;
+
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border-bottom: 1px solid var(--primary);
+}
+
+.orderroweven,
+.orderrowodd {
+  font-size: 17px;
+  font-weight: 500;
+
+  font-family: inherit;
+
+  width: 100%;
+
+  padding: 10px 14px;
+
+  color: var(--text);
+  border-bottom: 1px solid #e6e6e8;
+
+  overflow-wrap: break-word;
+}
+
+.orderroweven {
+  background-color: var(--surface-alt);
+}
+
+.orderrowodd {
+  background-color: var(--surface);
+}
+
+.order-ticket > div:last-child > div {
+  border-bottom: none;
+}
+
+.row {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+dialog {
+  width: min(420px, calc(100% - 32px));
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  padding: 24px;
+
+  background-color: white;
+  color: var(--text);
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+dialog h3 {
+  font-size: 19px;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+dialog input {
+  display: block;
+
+  width: 100%;
+  padding: 11px 12px;
+
+  margin-bottom: 20px;
+
+  font-family: inherit;
+  font-size: 15px;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  background-color: #fafafa;
+  color: var(--text);
+}
+
+dialog input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+dialog label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+dialog h3 {
+  font-size: 16px;
+  margin: 15px 0 10px;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.dialog-buttons button {
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.dialog-buttons button.cancel {
+  background-color: #e5e5e7;
+  color: #333;
+}
+
+.dialog-buttons button.cancel:hover {
+  background-color: #d5d5d8;
+}
+
+#orderItemsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#orderItemsContainer input {
+  margin-bottom: 0;
+}
+
+#addItemButton {
+  margin-top: 12px;
+  background-color: #e8e8eb;
+  color: #333;
+  font-size: 13px;
+  border: 1px solid #d0d0d3;
+}
+
+#addItemButton:hover {
+  background-color: #d9d9dd;
+}
+
+.order-container::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.order-container::-webkit-scrollbar-track {
+  background: #dedee1;
+}
+
+.order-container::-webkit-scrollbar-thumb {
+  background: #99999f;
+  border-radius: 10px;
+}
+
+.order-container::-webkit-scrollbar-thumb:hover {
+  background: #77777d;
+}
+
+.order-time {
+  background-color: var(--surface-alt);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 10px;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .navbar button {
+    font-size: 12px;
+    padding: 9px 10px;
+  }
+
+  .order-container {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .order-ticket {
+    width: 280px;
+  }
+}
+
+dialog h2 {
+  font-size: 23px;
+  margin: 0 0 22px;
+  color: var(--primary);
+}
+
+.complete-button {
+  background-color: #4e6a3a;
+  color: white;
+
+  border: none;
+  border-radius: 0;
+
+  width: 100%;
+  padding: 12px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  margin-top: 0;
+
+  cursor: pointer;
+}
+
+.complete-button:hover {
+  background-color: #3c5229;
+}
+
+.kitchen-home {
+  color: #f4eee3;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 14px;
+  border: 1px solid #8c8075;
+  border-radius: 6px;
+}
+.kitchen-home:hover,
+.kitchen-home:focus-visible {
+  background: #f4eee3;
+  color: #1d1916;
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boba Lounge - KDS</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="kds.css" />
+    <link rel="stylesheet" href="translate.css" />
+    <script src="translate.js" defer></script>
+  </head>
+  <body>
+    <!-- top navbar -->
+    <div class="navbar">
+      <a class="kitchen-home" href="index.html">← Back to Home</a>
+      <div class="tools">
+        <button id="quickTest">quick test</button>
+        <button
+          id="manualAdd"
+          command="show-modal"
+          commandfor="manualAddDialog"
+        >
+          manual add
+        </button>
+      </div>
+    </div>
+
+    <!-- order items-->
+    <div id="orders-container" class="order-container"></div>
+
+    <!-- dialog -->
+
+    <dialog id="manualAddDialog">
+      <form id="popupForm">
+        <h2>Manually Add Order</h2>
+
+        <label for="manualOrderID">Order ID</label>
+        <input
+          type="text"
+          id="manualOrderID"
+          placeholder="Enter order ID"
+          required
+        />
+
+        <label for="manualOrderName">Order Name</label>
+        <input
+          type="text"
+          id="manualOrderName"
+          placeholder="Enter order name"
+          required
+        />
+
+        <label for="manualOrderTime">Order Time</label>
+        <input type="time" id="manualOrderTime" required />
+
+        <h3>Order Items</h3>
+
+        <div id="orderItemsContainer">
+          <input
+            type="text"
+            class="order-item-input"
+            placeholder="Enter item"
+            required
+          />
+        </div>
+
+        <button type="button" id="addItemButton">+ Add Another Item</button>
+
+        <div class="dialog-buttons">
+          <button type="button" class="cancel" id="cancelOrderButton">
+            Cancel
+          </button>
+
+          <button type="button" id="submitManualOrder">Add Order</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="kds.js" defer></script>
+  </body>
+</html>
