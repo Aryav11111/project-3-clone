@@ -18,6 +18,7 @@ const pool = new Pool({
 const app = express();
 app.use(express.json());
 require('./translation')(app);
+require('./assistant')(app, pool);
 require('./auth')(app, pool);
 app.use(express.static(path.join(__dirname, 'public')));
  
